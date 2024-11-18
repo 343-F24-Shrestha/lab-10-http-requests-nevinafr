@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nevina Frese Lab 10</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5E5FC;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .container {
+            margin: 20px;
+        }
+        button {
+            margin: 10px 0;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color:#D1B1C8;
+        }
+        .output {
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #FDF7FA;
+        }
+        .gif-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Show Me The Data!</h1>
+        <div>
+            <h3>Dog Fact #1</h3>
+            <button type="button" onclick="fetchData(1)">Give me a dog fact!</button>
+            <div id="output1" class="output">No fact fetched yet.</div>
+        </div>
+        <div>
+            <h3>Dog Fact #2</h3>
+            <button type="button" onclick="fetchData(2)">Give me a dog fact!</button>
+            <div id="output2" class="output">No fact fetched yet.</div>
+        </div>
+        <div>
+            <h3>Dog Fact #3</h3>
+            <button type="button" onclick="fetchData(3)">Give me a dog fact!</button>
+            <div id="output3" class="output">No fact fetched yet.</div>
+        </div>
+        <div class="gif-container">
+            <iframe title="Dog" src="https://giphy.com/embed/l2uluGTvB7DAQvZyHp" width="400" height="400" class="giphy-embed" allowfullscreen></iframe><p></p>
+        </div>
+    </div>
+
+    <script>
+        async function fetchData(site) {
+            // const response = await fetch('https://dogapi.dog/api/facts?number=5');
+            // const data = await response.json();
+            // alert("Data?");
+            try {
+                const response = await fetch('https://dogapi.dog/api/facts?number=1');
+                if (!response.ok) {
+                    alert("data???");
+                }
+                const data = await response.json();
+                const div = document.getElementById(`output${site}`);
+                div.innerHTML = data.facts.map(fact => `<p>${fact}</p>`).join(''); // wrap in <p> tag then display on the page
+            } catch (error) {
+                console.error('Could not fetch data', error);
+                const div = document.getElementById(`output${site}`);
+                div.innerHTML = 'The data wasnt found...!';
+            }
+        }
+    </script>
+</body>
+</html>
